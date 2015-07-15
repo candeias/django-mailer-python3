@@ -68,6 +68,7 @@ class Message(models.Model):
     message_body = models.TextField()
     when_added = models.DateTimeField(default=timezone.now)
     priority = models.CharField(max_length=1, choices=PRIORITIES, default='2')
+    reply_to = models.CharField(max_length=50)
     # @@@ campaign?
     # @@@ content_type?
     
@@ -138,6 +139,7 @@ class MessageLogManager(models.Manager):
             # @@@ other fields from Message
             result = result_code,
             log_message = log_message,
+            reply_to = message.reply_to
         )
         message_log.save()
 
@@ -153,6 +155,7 @@ class MessageLog(models.Model):
     message_body = models.TextField()
     when_added = models.DateTimeField()
     priority = models.CharField(max_length=1, choices=PRIORITIES)
+    reply_to = models.CharField(max_length=50)
     # @@@ campaign?
     
     # additional logging fields

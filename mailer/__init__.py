@@ -18,7 +18,7 @@ PRIORITY_MAPPING = {
 # replacement for django.core.mail.send_mail
 
 def send_mail(subject, message, from_email, recipient_list, priority="medium",
-              fail_silently=False, auth_user=None, auth_password=None):
+              fail_silently=False, reply_to=None, auth_user=None, auth_password=None):
     from mailer.models import Message
     
     priority = PRIORITY_MAPPING[priority]
@@ -33,7 +33,8 @@ def send_mail(subject, message, from_email, recipient_list, priority="medium",
                 from_address=from_email,
                 subject=subject,
                 message_body=message,
-                priority=priority).save()
+                priority=priority,
+                reply_to=reply_to).save()
 
 def mail_admins(subject, message, fail_silently=False, priority="medium"):
     from django.conf import settings
