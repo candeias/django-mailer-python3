@@ -72,6 +72,9 @@ def send_all():
                     logging.info("sending message '%s' to %s" % (message.subject.encode("utf-8"), message.to_address.encode("utf-8")))
 
                     if message.reply_to != None and message.reply_to != "":
+                        if type(message.reply_to) != list:
+                            message.reply_to = [message.reply_to]
+
                         e_message = EmailMessage(message.subject, message.message_body, message.from_address, [message.to_address], reply_to = message.reply_to)
                         e_message.send()
 
